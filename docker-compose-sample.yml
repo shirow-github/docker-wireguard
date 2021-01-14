@@ -2,7 +2,6 @@ version: "2.1"
 services:
   wireguard:
     image: linuxserver/wireguard
-    container_name: wireguard
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -20,6 +19,14 @@ services:
       - /lib/modules:/lib/modules
     ports:
       - 51820:51820/udp
+    #networks:
+      #- my_network
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
-    restart: unless-stopped
+      - net.ipv4.ip_forward=1
+    #restart: always
+
+# docker network create my_network #optional
+#networks:
+    #my_network:
+        #external: true
